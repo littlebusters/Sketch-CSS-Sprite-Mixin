@@ -1,11 +1,13 @@
 Sketch CSS Sprite Mixin
 =======================
 
-Generate a code of mixin for scss, less and stylus in Sketch 3.
+Generate a code of mixin for scss, less and stylus in Sketch 3. Code is copied to the clipboard when run the plugin.
 
 Sprites name are group layer name of top-level, and the Sprite image name is an Artboard name.
 
 ![Screen Shot](http://creative-tweet.net/img/github/css-sprite-generator-ss.png)
+
+**SCSS**
 
 ```scss
 @mixin cssSprite( $spriteVals ) {
@@ -23,6 +25,8 @@ $facebook: 64px 64px '../img/sprite.png' -16px -258px;
 $googlep: 64px 64px '../img/sprite.png' 0px -133px;
 ```
 
+**LESS**
+
 ```less
 .cssSprite( @spriteVals ) {
 	width: extract( @spriteVals, 1 );
@@ -38,6 +42,8 @@ $googlep: 64px 64px '../img/sprite.png' 0px -133px;
 @facebook: 64px 64px '../img/sprite.png' -16px -258px;
 @googlep: 64px 64px '../img/sprite.png' 0px -133px;
 ```
+
+**Stylus**
 
 ```stylus
 cssSprite( $spriteVals )
