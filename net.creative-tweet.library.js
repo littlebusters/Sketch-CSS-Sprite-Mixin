@@ -134,12 +134,15 @@ cssSpriteGenerator.getSpriteValue = function( _type ) {
 		spriteVariable = '',
 		imagePath = '../img/' + [artboard name] + '.png';
 
+	spritePathVariableName = prefix + [artboard name] + '-path';
+	spriteVariable += spritePathVariableName + sepalator + ' \'' + imagePath + '\';\n';
+
 	for (var i = [layers count] - 1; i >= 0; i--) {
 		var layer = [layers objectAtIndex:i];
 			spriteVariable += prefix + [layer name] + sepalator
 						    + ' ' + [[layer frame] width] + 'px' 
 						    + ' ' + [[layer frame] height] + 'px'
-						    + ' \'' + imagePath + '\''
+						    + ' ' + spritePathVariableName
 						    + ' ' + ( 0 - [[layer frame] x] ) + 'px' 
 						    + ' ' + ( 0 - [[layer frame] y] ) + 'px' 
 						    + ';\n';
