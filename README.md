@@ -5,6 +5,12 @@ Generate a code of mixin for scss, less and stylus in Sketch 3. Code is copied t
 
 Sprites name are group layer name of top-level, and the Sprite image name is an Artboard name.
 
+## Usage
+
+1. Select Artboard.
+1. Choose **Plugins › Sketch Css Sprite Mixin › CSS Sprite Mixin - (SCSS|LESS|Stylus)**.
+1. Genarated code to Clipboard.
+
 ![Screen Shot](http://creative-tweet.net/img/github/css-sprite-generator-ss.png)
 
 **SCSS**
@@ -17,12 +23,13 @@ Sprites name are group layer name of top-level, and the Sprite image name is an 
 	background-image: url( #{ nth( $spriteVals, 3 ) } );
 	background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
 }
-$twitter-gray: 64px 64px '../img/sprite.png' -110px 0px;
-$facebook-gray: 64px 64px '../img/sprite.png' -110px -233px;
-$googlep-gray: 64px 64px '../img/sprite.png' -132px -133px;
-$twitter: 64px 64px '../img/sprite.png' -24px -26px;
-$facebook: 64px 64px '../img/sprite.png' -16px -258px;
-$googlep: 64px 64px '../img/sprite.png' 0px -133px;
+$sprite-path: '../img/sprite.png';
+$twitter-gray: 64px 64px $sprite-path -110px 0px;
+$facebook-gray: 64px 64px $sprite-path -110px -233px;
+$googlep-gray: 64px 64px $sprite-path -132px -133px;
+$twitter: 64px 64px $sprite-path -24px -26px;
+$facebook: 64px 64px $sprite-path -16px -258px;
+$googlep: 64px 64px $sprite-path 0px -133px;
 ```
 
 **LESS**
@@ -35,12 +42,13 @@ $googlep: 64px 64px '../img/sprite.png' 0px -133px;
 	background-image: e(%('url(%s)', extract( @spriteVals, 3 ) ) );
 	background-position: extract( @spriteVals, 4 ) extract( @spriteVals, 5 );
 }
-@twitter-gray: 64px 64px '../img/sprite.png' -110px 0px;
-@facebook-gray: 64px 64px '../img/sprite.png' -110px -233px;
-@googlep-gray: 64px 64px '../img/sprite.png' -132px -133px;
-@twitter: 64px 64px '../img/sprite.png' -24px -26px;
-@facebook: 64px 64px '../img/sprite.png' -16px -258px;
-@googlep: 64px 64px '../img/sprite.png' 0px -133px;
+@sprite-path: '../img/sprite.png';
+@twitter-gray: 64px 64px @sprite-path -110px 0px;
+@facebook-gray: 64px 64px @sprite-path -110px -233px;
+@googlep-gray: 64px 64px @sprite-path -132px -133px;
+@twitter: 64px 64px @sprite-path -24px -26px;
+@facebook: 64px 64px @sprite-path -16px -258px;
+@googlep: 64px 64px @sprite-path 0px -133px;
 ```
 
 **Stylus**
@@ -53,13 +61,20 @@ cssSprite( $spriteVals )
 	background-image: url( $spriteVals[2] );
 	background-position: $spriteVals[3] $spriteVals[4];
 
-$twitter-gray = 64px 64px '../img/sprite.png' -110px 0px;
-$facebook-gray = 64px 64px '../img/sprite.png' -110px -233px;
-$googlep-gray = 64px 64px '../img/sprite.png' -132px -133px;
-$twitter = 64px 64px '../img/sprite.png' -24px -26px;
-$facebook = 64px 64px '../img/sprite.png' -16px -258px;
-$googlep = 64px 64px '../img/sprite.png' 0px -133px;
+$sprite-path = '../img/artboard.png';
+$twitter-gray = 64px 64px $sprite-path -110px 0px;
+$facebook-gray = 64px 64px $sprite-path -110px -233px;
+$googlep-gray = 64px 64px $sprite-path -132px -133px;
+$twitter = 64px 64px $sprite-path -24px -26px;
+$facebook = 64px 64px $sprite-path -16px -258px;
+$googlep = 64px 64px $sprite-path 0px -133px;
 ```
+
+## Installation
+
+You can find this plugin in "[Sketch ToolBox.app](http://sketchtoolbox.com/)". Type "mixin" on the search box, then you click "install" button.
+
+Or, [Download the plugin zip](https://github.com/littlebusters/Sketch-Css-Sprite-Mixin/archive/master.zip) and unzip. You Choose **Plugins › Reveal Plugins Folder...** in Sketch.app. Put the unziped fonlder to the Plugins folder. 
 
 ## License
 
