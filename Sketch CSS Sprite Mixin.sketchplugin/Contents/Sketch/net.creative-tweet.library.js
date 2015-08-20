@@ -1,13 +1,14 @@
-// Shortcut to CSS Sprite Generator (shift cmd g)
+var doc = context.document;
 var cssSpriteGenerator = cssSpriteGenerator || {};
 var artboard = [[doc currentPage] currentArtboard];
 if ( !artboard ) {
 	artboard = [[[doc currentPage] artboards] objectAtIndex:0];
 }
-var pasteBoard = null;
-pasteBoard = NSPasteboard.generalPasteboard();
-pasteBoard.declareTypes_owner( [ NSPasteboardTypeString ], null );
 
+cssSpriteGenerator.pluginVersion = function ( context ) {
+	log( 'Version: 1.1.0' );
+	context.document.showMessage( 'Version: 1.1.0' );
+}
 cssSpriteGenerator.getMixinSet = function( _type ) {
 	return this.getMixin( _type ) + this.getSpriteValue( _type )
 }
@@ -51,26 +52,29 @@ cssSpriteGenerator.getMixin = function( _type ) {
 			break;
 		default:
 			var varName = '$spriteVals',
-				mixinStart = '@mixin ' + mixinName + '( ' + varName + ' ) {\n',
-				mixinEnd   = '}\n',
+				mixinStart = '=' + mixinName + '( ' + varName + ' )\n',
+				mixinEnd   = '\n',
 				wrapStart = ' nth( ',
 				listIdx   = ', ',
 				wrapEnd   = ' )',
 				bgImageStart = ' url( #{',
-				bgImageEnd   = ' } );\n',
+				bgImageEnd   = ' }\n',
 				i = 1;
 			break;
 	}
 
+	var terminate = ';';
+	if( _type == 'sass' ) terminate = ''; 
+	
 	var mixin  = mixinStart
-			   + '\twidth:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + ';\n'
-			   + '\theight:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + ';\n'
+			   + '\twidth:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + terminate + '\n'
+			   + '\theight:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + terminate + '\n'
 			   + '\tbackground-repeat: no-repeat;\n'
 			   + '\tbackground-image:' + bgImageStart 
 			   						   + wrapStart + varName + listIdx + ( i++ ) + wrapEnd 
 			   						   + bgImageEnd
 			   + '\tbackground-position:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd
-										  + wrapStart + varName + listIdx + i + wrapEnd + ';\n'
+										  + wrapStart + varName + listIdx + i + wrapEnd + terminate + '\n'
 			   + mixinEnd;
 
 	return mixin;
@@ -109,7 +113,8 @@ cssSpriteGenerator.getExportDir = function() {
 
 cssSpriteGenerator.getSpriteValue = function( _type ) {
 	var prefix = '',
-		sepalator = '';
+		sepalator = '',
+		terminate = ';';
 
 	switch ( _type ) {
 		case 'scss':
@@ -127,15 +132,20 @@ cssSpriteGenerator.getSpriteValue = function( _type ) {
 		default:
 			prefix = '$';
 			sepalator = ':';
+			terminate = '';
 			break;
 	}
 
 	var layers = [artboard layers],
 		spriteVariable = '',
-		imagePath = '../img/' + [artboard name] + '.png';
+		imageName      = [artboard name];
+		imagePath      = '../img/' + imageName + '.png',
+		imagePathx2    =  '../img/' + imageName + '@2.png',
 
-	spritePathVariableName = prefix + [artboard name] + '-path';
+	spritePathVariableName   = prefix + [artboard name] + '-path';
+	spritePathVariableNamex2 = spritePathVariableName + '@2';
 	spriteVariable += spritePathVariableName + sepalator + ' \'' + imagePath + '\';\n';
+	spriteVariable += spritePathVariableNamex2 + sepalator + ' \'' + imagePathx2 + '\';\n';
 
 	for (var i = [layers count] - 1; i >= 0; i--) {
 		var layer = [layers objectAtIndex:i];

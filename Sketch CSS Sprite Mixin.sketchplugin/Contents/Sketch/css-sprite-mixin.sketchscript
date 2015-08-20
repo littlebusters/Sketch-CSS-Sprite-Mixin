@@ -1,0 +1,35 @@
+@import 'net.creative-tweet.library.js'
+
+pluginVersion( context );
+
+var pasteBoard = null;
+pasteBoard = NSPasteboard.generalPasteboard();
+var nspts = pasteBoard.declareTypes_owner( [ NSPasteboardTypeString ], null );
+
+function getScss( context ) {
+    pasteBoard.setString_forType(
+        cssSpriteGenerator.getMixinSet( 'scss' ), 
+        nspts
+    );
+}
+
+function getSass( context ) {
+    pasteBoard.setString_forType(
+        cssSpriteGenerator.getMixinSet( 'sass' ), 
+        nspts
+    );
+}
+
+function getLess( context ) {
+    pasteBoard.setString_forType(
+        cssSpriteGenerator.getMixinSet( 'less' ), 
+        nspts
+    );
+}
+
+function getStylus( context ) {
+    pasteBoard.setString_forType(
+        cssSpriteGenerator.getMixinSet( 'stylus' ), 
+        nspts
+    );
+}

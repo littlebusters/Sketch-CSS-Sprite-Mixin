@@ -1,7 +1,0 @@
-// Generate 'Stylus'
-#import 'net.creative-tweet.library.js'
-
-pasteBoard.setString_forType(
-	cssSpriteGenerator.getMixinSet( 'less' ), 
-	NSPasteboardTypeString
-);

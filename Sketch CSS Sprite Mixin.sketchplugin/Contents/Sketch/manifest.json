@@ -1,0 +1,44 @@
+{
+    "author": "littlebusters",
+    "menu" : {
+        "isRoot" : false,
+        "shortcut" : "",
+        "items" : [
+            "css-sprite-mixin-scss",
+            "css-sprite-mixin-sass",
+            "css-sprite-mixin-less",
+            "css-sprite-mixin-stylus"
+        ],
+        "title" : "Sketch CSS Sprite Mixin"
+    },
+    "identifier": "net.creative-tweet.css-sprite-mixin",
+    "version": "1.1.0",
+    "description" : "This plugin can rename layer by Regexp.",
+    "name" : "Sketch CSS Sprite Mixin",
+    "commands" : [
+        {
+            "name": "Scss",
+            "identifier": "css-sprite-mixin-scss",
+            "handler" : "getScss",
+            "script": "css-sprite-mixin.sketchscript"
+        },
+        {
+            "name": "Sass",
+            "identifier": "css-sprite-mixin-sass",
+            "handler" : "getSass",
+            "script": "css-sprite-mixin.sketchscript"
+        },
+        {
+            "name": "Less",
+            "identifier": "css-sprite-mixin-less",
+            "handler" : "getLess",
+            "script": "css-sprite-mixin.sketchscript"
+        },
+        {
+            "name": "Stylus",
+            "identifier": "css-sprite-mixin-stylus",
+            "handler" : "getStylus",
+            "script": "css-sprite-mixin.sketchscript"
+        }
+    ]
+}
