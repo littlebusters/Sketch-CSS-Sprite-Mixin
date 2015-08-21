@@ -1,7 +1,7 @@
 @import 'net.creative-tweet.library.js'
 
 function getScss( context ) {
-    cssSpriteGenerator.init( context );
+    cssSpriteGenerator.init( context, 'scss' );
     cssSpriteGenerator.pasteBoard.setString_forType(
         cssSpriteGenerator.getMixinSet( 'scss' ), 
         NSPasteboardTypeString
@@ -9,8 +9,8 @@ function getScss( context ) {
 }
 
 function getSass( context ) {
-    cssSpriteGenerator.init( context );
-    pasteBoard.setString_forType(
+    cssSpriteGenerator.init( context, 'sass' );
+    cssSpriteGenerator.pasteBoard.setString_forType(
         cssSpriteGenerator.getMixinSet( 'sass' ), 
         NSPasteboardTypeString
 
@@ -18,16 +18,16 @@ function getSass( context ) {
 }
 
 function getLess( context ) {
-    cssSpriteGenerator.init( context );
-    pasteBoard.setString_forType(
+    cssSpriteGenerator.init( context, 'less' );
+    cssSpriteGenerator.pasteBoard.setString_forType(
         cssSpriteGenerator.getMixinSet( 'less' ), 
         NSPasteboardTypeString
     );
 }
 
 function getStylus( context ) {
-    cssSpriteGenerator.init( context );
-    pasteBoard.setString_forType(
+    cssSpriteGenerator.init( context, 'stylus' );
+    cssSpriteGenerator.pasteBoard.setString_forType(
         cssSpriteGenerator.getMixinSet( 'stylus' ), 
         NSPasteboardTypeString
     );

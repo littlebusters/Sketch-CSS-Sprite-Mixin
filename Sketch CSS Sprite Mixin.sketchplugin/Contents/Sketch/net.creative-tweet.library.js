@@ -1,6 +1,6 @@
 var cssSpriteGenerator = cssSpriteGenerator || {};
 
-cssSpriteGenerator.init = function( context ) {
+cssSpriteGenerator.init = function( context, _type ) {
 	this.context = context;
 	this.doc = context.document;
 	this.artboard = this.doc.currentPage().currentArtboard();
@@ -9,10 +9,36 @@ cssSpriteGenerator.init = function( context ) {
 	this.pasteBoard = null;
 	this.pasteBoard = NSPasteboard.generalPasteboard();
 	this.pasteBoard.declareTypes_owner( [ NSPasteboardTypeString ], null );
+
+	this.prefix = '',
+	this.sepalator = '',
+	this.termination = ';';
+	switch ( _type ) {
+		case 'scss':
+			this.prefix = '$';
+			this.sepalator = ':';
+			break;
+		case 'less':
+			this.prefix = '@';
+			this.sepalator = ':';
+			break;
+		case 'stylus':
+			this.prefix = '$';
+			this.sepalator = ' =';
+			break;
+		default:
+			this.prefix = '$';
+			this.sepalator = ':';
+			this.termination = '';
+			break;
+	}
+	var	bgiSize      = 'bgiSize';
+	this.bgiSizeWVal = this.prefix + bgiSize + 'W';
+	this.bgiSizeHVal = this.prefix + bgiSize + 'H';
 }
 
 cssSpriteGenerator.getMixinSet = function( _type ) {
-	return this.getMixin( _type ) + this.getSpriteValue( _type )
+	return this.getMixin( _type ) + this.getSpriteValue( _type );
 }
 
 cssSpriteGenerator.getMixin = function( _type ) {
@@ -27,7 +53,8 @@ cssSpriteGenerator.getMixin = function( _type ) {
 				listIdx   = ', ',
 				wrapEnd   = ' )',
 				bgImageStart = ' url( #{',
-				bgImageEnd   = ' } );\n',
+				bgImageEnd   = ' } )' + this.termination + '\n',
+				ruleSetStart = '{',
 				i = 1;
 			break;
 		case 'less':
@@ -37,8 +64,9 @@ cssSpriteGenerator.getMixin = function( _type ) {
 				wrapStart = ' extract( ',
 				listIdx   = ', ',
 				wrapEnd   = ' )',
-				bgImageStart = ' e(%(\'url(%s)\',',
-				bgImageEnd   = ' ) );\n',
+				bgImageStart = ' e( %( \'url(%s)\',',
+				bgImageEnd   = ' ) )' + this.termination + '\n',
+				ruleSetStart = '{',
 				i = 1;
 			break;
 		case 'stylus':
@@ -49,7 +77,8 @@ cssSpriteGenerator.getMixin = function( _type ) {
 				listIdx   = '[',
 				wrapEnd   = ']',
 				bgImageStart = ' url(',
-				bgImageEnd   = ' );\n',
+				bgImageEnd   = ' )' + this.termination + '\n',
+				ruleSetStart = '',
 				i = 0;
 			break;
 		default:
@@ -60,74 +89,60 @@ cssSpriteGenerator.getMixin = function( _type ) {
 				listIdx   = ', ',
 				wrapEnd   = ' )',
 				bgImageStart = ' url( #{',
-				bgImageEnd   = ' }\n',
+				bgImageEnd   = ' } )' + this.termination + '\n',
+				ruleSetStart = '',
 				i = 1;
 			break;
 	}
 
-	var termination = ';';
-	if( _type == 'sass' ) termination = ''; 
-	// @media only screen and (-webkit-min-device-pixel-ratio: 2), 
-	// only screen and (min-device-pixel-ratio: 2) {
 	var mixin  = mixinStart
-			   + '\twidth:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + termination + '\n'
-			   + '\theight:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + termination + '\n'
-			   + '\tbackground-repeat: no-repeat;\n'
+			   + '\twidth:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + this.termination + '\n'
+			   + '\theight:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + this.termination + '\n'
+			   + '\tbackground-repeat: no-repeat' + this.termination + '\n'
 			   + '\tbackground-image:' + bgImageStart 
 									   + wrapStart + varName + listIdx + ( i++ ) + wrapEnd 
 									   + bgImageEnd
 			   + '\tbackground-position:' + wrapStart + varName + listIdx + ( i++ ) + wrapEnd
-										  + wrapStart + varName + listIdx + i + wrapEnd + termination + '\n'
+										  + wrapStart + varName + listIdx + ( i++ ) + wrapEnd + this.termination + '\n'
+			   + '\t@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), '
+			   + 'only screen and ( min-device-pixel-ratio: 2 ) ' + ruleSetStart + '\n'
+			   + '\t\tbackground-image:' + bgImageStart 
+									   + wrapStart + varName + listIdx + ( i++ ) + wrapEnd 
+									   + bgImageEnd
+			   + '\t\t' + 'background-size: ' + this.bgiSizeWVal + ' ' + this.bgiSizeHVal + this.termination + '\n'
+			   + '\t' + mixinEnd
 			   + mixinEnd;
 
 	return mixin;
 }
 
 cssSpriteGenerator.getSpriteValue = function( _type ) {
-	var prefix = '',
-		sepalator = '',
-		termination = ';';
-
-	switch ( _type ) {
-		case 'scss':
-			prefix = '$';
-			sepalator = ':';
-			break;
-		case 'less':
-			prefix = '@';
-			sepalator = ':';
-			break;
-		case 'stylus':
-			prefix = '$';
-			sepalator = ' =';
-			break;
-		default:
-			prefix = '$';
-			sepalator = ':';
-			termination = '';
-			break;
-	}
-
 	var layers = this.artboard.layers(),
 		spriteVariable = '',
 		imageName      = this.artboard.name();
-		imagePath      = '../img/' + imageName + '.png',
-		imagePathx2    =  '../img/' + imageName + '@2.png',
+		imagePath      = '../img/' + imageName;
 
-	spritePathVariableName   = prefix + this.artboard.name() + '-path';
-	spritePathVariableNamex2 = spritePathVariableName + 'x2';
-	spriteVariable += spritePathVariableName + sepalator + ' \'' + imagePath + '\';\n';
-	spriteVariable += spritePathVariableNamex2 + sepalator + ' \'' + imagePathx2 + '\';\n';
+	spritePathVariableName  = this.prefix + this.artboard.name() + 'Path';
+	spriteVariable += spritePathVariableName + this.sepalator + ' \'' + imagePath + '\'' + this.termination + '\n';
+
+	spriteURLVariableName   = this.prefix + this.artboard.name() + 'URL';
+	spriteURLVariableNamex2 = this.prefix + this.artboard.name() + 'x2URL';
+	spriteVariable += spriteURLVariableName   + this.sepalator + ' ' + spritePathVariableName + ' + \'.png\'' + this.termination + '\n';
+	spriteVariable += spriteURLVariableNamex2 + this.sepalator + ' ' + spritePathVariableName + ' + \'@2.png\'' + this.termination + '\n';
+
+	spriteVariable += this.bgiSizeWVal + this.sepalator + ' ' + this.artboard.frame().width() + 'px' + this.termination + '\n';
+	spriteVariable += this.bgiSizeHVal + this.sepalator + ' ' + this.artboard.frame().height() + 'px' + this.termination + '\n';
 
 	for (var i = layers.count() - 1; i >= 0; i--) {
 		var layer = layers.objectAtIndex( i );
-			spriteVariable += prefix + layer.name() + sepalator
+			spriteVariable += this.prefix + layer.name() + this.sepalator
 							+ ' ' + layer.frame().width() + 'px' 
 							+ ' ' + layer.frame().height() + 'px'
-							+ ' ' + spritePathVariableName
+							+ ' ' + spriteURLVariableName
 							+ ' ' + ( 0 - layer.frame().x() ) + 'px' 
 							+ ' ' + ( 0 - layer.frame().y() ) + 'px' 
-							+ ';\n';
+							+ ' ' + spriteURLVariableNamex2
+							+ this.termination + '\n';
 	};
 
 	return spriteVariable;
