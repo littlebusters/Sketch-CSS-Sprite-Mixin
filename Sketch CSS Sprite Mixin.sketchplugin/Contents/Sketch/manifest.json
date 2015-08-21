@@ -13,7 +13,7 @@
     },
     "identifier": "net.creative-tweet.css-sprite-mixin",
     "version": "1.1.0",
-    "description" : "This plugin can rename layer by Regexp.",
+    "description" : "Generate a code of CSS Sprite Mixin to Clipboard.",
     "name" : "Sketch CSS Sprite Mixin",
     "commands" : [
         {
