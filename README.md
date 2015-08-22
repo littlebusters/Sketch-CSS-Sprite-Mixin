@@ -8,10 +8,10 @@ Sprites name are group layer name of top-level, and the Sprite image name is an 
 ## Usage
 
 1. Select Artboard.
-1. Choose **Plugins › Sketch Css Sprite Mixin › CSS Sprite Mixin - (SCSS|LESS|Stylus)**.
+1. Choose **Plugins › Sketch Css Sprite Mixin › (Scss|Sass|Less|Stylus)**.
 1. Genarated code to Clipboard.
 
-![Screen Shot](http://creative-tweet.net/img/github/css-sprite-generator-ss.png)
+![Screen Shot](https://github.com/littlebusters/Sketch-CSS-Sprite-Mixin/css-sprite-generator-ss.png)
 
 **SCSS**
 
@@ -22,33 +22,71 @@ Sprites name are group layer name of top-level, and the Sprite image name is an 
 	background-repeat: no-repeat;
 	background-image: url( #{ nth( $spriteVals, 3 ) } );
 	background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
+	@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
+		background-image: url( #{ nth( $spriteVals, 6 ) } );
+		background-size: $bgiSizeW $bgiSizeH;
+	}
 }
-$sprite-path: '../img/sprite.png';
-$twitter-gray: 64px 64px $sprite-path -110px 0px;
-$facebook-gray: 64px 64px $sprite-path -110px -233px;
-$googlep-gray: 64px 64px $sprite-path -132px -133px;
-$twitter: 64px 64px $sprite-path -24px -26px;
-$facebook: 64px 64px $sprite-path -16px -258px;
-$googlep: 64px 64px $sprite-path 0px -133px;
+$icon-spritePath: '../img/icon-sprite';
+$icon-spriteURL: $icon-spritePath + '.png';
+$icon-spritex2URL: $icon-spritePath + '@2.png';
+$bgiSizeW: 200px;
+$bgiSizeH: 200px;
+$instagram: 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL;
+$pinterest: 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL;
+$facebook: 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL;
+$twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL;
 ```
 
-**LESS**
+**Sass**
+
+```sass
+=cssSprite( $spriteVals )
+	width: nth( $spriteVals, 1 )
+	height: nth( $spriteVals, 2 )
+	background-repeat: no-repeat
+	background-image: url( #{ nth( $spriteVals, 3 ) } )
+	background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 )
+	@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) 
+		background-image: url( #{ nth( $spriteVals, 6 ) } )
+		background-size: $bgiSizeW $bgiSizeH
+	
+
+$icon-spritePath: '../img/icon-sprite'
+$icon-spriteURL: $icon-spritePath + '.png'
+$icon-spritex2URL: $icon-spritePath + '@2.png'
+$bgiSizeW: 200px
+$bgiSizeH: 200px
+$instagram: 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL
+$pinterest: 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL
+$facebook: 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL
+$twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL
+```
+
+**Less**
 
 ```less
-.cssSprite( @spriteVals ) {
-	width: extract( @spriteVals, 1 );
-	height: extract( @spriteVals, 2 );
-	background-repeat: no-repeat;
-	background-image: e(%('url(%s)', extract( @spriteVals, 3 ) ) );
-	background-position: extract( @spriteVals, 4 ) extract( @spriteVals, 5 );
-}
-@sprite-path: '../img/sprite.png';
-@twitter-gray: 64px 64px @sprite-path -110px 0px;
-@facebook-gray: 64px 64px @sprite-path -110px -233px;
-@googlep-gray: 64px 64px @sprite-path -132px -133px;
-@twitter: 64px 64px @sprite-path -24px -26px;
-@facebook: 64px 64px @sprite-path -16px -258px;
-@googlep: 64px 64px @sprite-path 0px -133px;
+=cssSprite( $spriteVals )
+	width: nth( $spriteVals, 1 )
+	height: nth( $spriteVals, 2 )
+	background-repeat: no-repeat
+	background-image: url( #{ nth( $spriteVals, 3 ) } )
+	background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 )
+	@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) 
+		background-image: url( #{ nth( $spriteVals, 6 ) } )
+		background-size: $bgiSizeW $bgiSizeH
+	
+
+$icon-spritePath: '../img/icon-sprite'
+$icon-spriteURL: $icon-spritePath + '.png'
+$icon-spritex2URL: $icon-spritePath + '@2.png'
+$bgiSizeW: 200px
+$bgiSizeH: 200px
+$instagram: 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL
+$pinterest: 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL
+$facebook: 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL
+$twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL
+
 ```
 
 **Stylus**
@@ -60,14 +98,20 @@ cssSprite( $spriteVals )
 	background-repeat: no-repeat;
 	background-image: url( $spriteVals[2] );
 	background-position: $spriteVals[3] $spriteVals[4];
+	@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) 
+		background-image: url( $spriteVals[5] );
+		background-size: $bgiSizeW $bgiSizeH;
+	
 
-$sprite-path = '../img/artboard.png';
-$twitter-gray = 64px 64px $sprite-path -110px 0px;
-$facebook-gray = 64px 64px $sprite-path -110px -233px;
-$googlep-gray = 64px 64px $sprite-path -132px -133px;
-$twitter = 64px 64px $sprite-path -24px -26px;
-$facebook = 64px 64px $sprite-path -16px -258px;
-$googlep = 64px 64px $sprite-path 0px -133px;
+$icon-spritePath = '../img/icon-sprite';
+$icon-spriteURL = $icon-spritePath + '.png';
+$icon-spritex2URL = $icon-spritePath + '@2.png';
+$bgiSizeW = 200px;
+$bgiSizeH = 200px;
+$instagram = 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL;
+$pinterest = 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL;
+$facebook = 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL;
+$twitter = 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL;
 ```
 
 ## Installation
