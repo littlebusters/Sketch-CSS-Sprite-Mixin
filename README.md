@@ -11,7 +11,7 @@ Sprites name are group layer name of top-level, and the Sprite image name is an 
 1. Choose **Plugins › Sketch Css Sprite Mixin › (Scss|Sass|Less|Stylus)**.
 1. Genarated code to Clipboard.
 
-![Screen Shot](https://github.com/littlebusters/Sketch-CSS-Sprite-Mixin/css-sprite-generator-ss.png)
+![Screen Shot](https://github.com/littlebusters/Sketch-CSS-Sprite-Mixin/blob/master/css-sprite-generator-ss.png)
 
 **SCSS**
 
