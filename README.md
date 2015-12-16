@@ -66,27 +66,26 @@ $twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL
 **Less**
 
 ```less
-=cssSprite( $spriteVals )
-	width: nth( $spriteVals, 1 )
-	height: nth( $spriteVals, 2 )
-	background-repeat: no-repeat
-	background-image: url( #{ nth( $spriteVals, 3 ) } )
-	background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 )
-	@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) 
-		background-image: url( #{ nth( $spriteVals, 6 ) } )
-		background-size: $bgiSizeW $bgiSizeH
-	
-
-$icon-spritePath: '../img/icon-sprite'
-$icon-spriteURL: $icon-spritePath + '.png'
-$icon-spritex2URL: $icon-spritePath + '@2.png'
-$bgiSizeW: 200px
-$bgiSizeH: 200px
-$instagram: 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL
-$pinterest: 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL
-$facebook: 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL
-$twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL
-
+.cssSprite( @spriteVals ) {
+	width: extract( @spriteVals, 1 );
+	height: extract( @spriteVals, 2 );
+	background-repeat: no-repeat;
+	background-image: e( %( 'url(%s)', extract( @spriteVals, 3 ) ) );
+	background-position: extract( @spriteVals, 4 ) extract( @spriteVals, 5 );
+	@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
+		background-image: e( %( 'url(%s)', extract( @spriteVals, 6 ) ) );
+		background-size: @bgiSizeW @bgiSizeH;
+	}
+}
+@icon-spritePath: '../img/icon-sprite';
+@icon-spriteURL: '@{icon-spritePath}.png';
+@icon-spritex2URL: '@{icon-spritePath}@2.png';
+@bgiSizeW: 200px;
+@bgiSizeH: 200px;
+@instagram: 64px 64px @icon-spriteURL -100px -100px @icon-spritex2URL;
+@pinterest: 64px 64px @icon-spriteURL 0px -100px @icon-spritex2URL;
+@facebook: 64px 64px @icon-spriteURL -100px 0px @icon-spritex2URL;
+@twitter: 64px 64px @icon-spriteURL 0px 0px @icon-spritex2URL;
 ```
 
 **Stylus**

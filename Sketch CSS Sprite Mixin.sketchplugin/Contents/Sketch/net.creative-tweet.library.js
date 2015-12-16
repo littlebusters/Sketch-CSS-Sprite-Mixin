@@ -122,28 +122,38 @@ cssSpriteGenerator.getSpriteValue = function( _type ) {
 		imageName      = this.artboard.name();
 		imagePath      = '../img/' + imageName;
 
-	spritePathVariableName  = this.prefix + this.artboard.name() + 'Path';
+	spritePathVariableName  = this.prefix + imageName + 'Path';
 	spriteVariable += spritePathVariableName + this.sepalator + ' \'' + imagePath + '\'' + this.termination + '\n';
 
-	spriteURLVariableName   = this.prefix + this.artboard.name() + 'URL';
-	spriteURLVariableNamex2 = this.prefix + this.artboard.name() + 'x2URL';
-	spriteVariable += spriteURLVariableName   + this.sepalator + ' ' + spritePathVariableName + ' + \'.png\'' + this.termination + '\n';
-	spriteVariable += spriteURLVariableNamex2 + this.sepalator + ' ' + spritePathVariableName + ' + \'@2.png\'' + this.termination + '\n';
+	spriteURLVariable = [
+						this.prefix + imageName + 'URL', '.png', 
+						this.prefix + imageName + 'x2URL', '@2.png'
+						];
+
+	for ( var i = 0; i < spriteURLVariable.length; i += 2 ) {
+		spriteVariable += spriteURLVariable[i] + this.sepalator + ' ';
+		if ( 'less' == _type ) {
+			spriteVariable += '\'@{' + imageName + 'Path}' + spriteURLVariable[i + 1] + '\'';
+		} else {
+			spriteVariable += spritePathVariableName + ' + \'' + spriteURLVariable[i + 1] + '\'';
+		}
+		spriteVariable += this.termination + '\n';
+	};
 
 	spriteVariable += this.bgiSizeWVal + this.sepalator + ' ' + this.artboard.frame().width() + 'px' + this.termination + '\n';
 	spriteVariable += this.bgiSizeHVal + this.sepalator + ' ' + this.artboard.frame().height() + 'px' + this.termination + '\n';
-
+	
 	for (var i = layers.count() - 1; i >= 0; i--) {
 		var layer = layers.objectAtIndex( i );
 			spriteVariable += this.prefix + layer.name() + this.sepalator
 							+ ' ' + layer.frame().width() + 'px' 
 							+ ' ' + layer.frame().height() + 'px'
-							+ ' ' + spriteURLVariableName
+							+ ' ' + spriteURLVariable[0]
 							+ ' ' + ( 0 - layer.frame().x() ) + 'px' 
 							+ ' ' + ( 0 - layer.frame().y() ) + 'px' 
-							+ ' ' + spriteURLVariableNamex2
+							+ ' ' + spriteURLVariable[2]
 							+ this.termination + '\n';
 	};
-
 	return spriteVariable;
 }
+
