@@ -36,6 +36,14 @@ $instagram: 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL;
 $pinterest: 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL;
 $facebook: 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL;
 $twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL;
+$icon-spriteList: $instagram instagram, $pinterest pinterest, $facebook facebook, $twitter twitter;
+@each $icon in $icon-spriteList {
+	$icon-spriteName: nth( $icon, 2 );
+	$icon-spriteClass: nth( $icon, 1 );
+	.icon-#{$icon-spriteName} {
+		@include cssSprite( $icon-spriteClass );
+	}
+}
 ```
 
 **Sass**
@@ -61,6 +69,12 @@ $instagram: 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL
 $pinterest: 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL
 $facebook: 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL
 $twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL
+$icon-spriteList: $instagram instagram, $pinterest pinterest, $facebook facebook, $twitter twitter
+@each $icon in $icon-spriteList 
+	$icon-spriteName: nth( $icon, 2 )
+	$icon-spriteClass: nth( $icon, 1 )
+	.icon-#{$icon-spriteName} 
+		+cssSprite( $icon-spriteClass )
 ```
 
 **Less**
@@ -86,31 +100,49 @@ $twitter: 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL
 @pinterest: 64px 64px @icon-spriteURL 0px -100px @icon-spritex2URL;
 @facebook: 64px 64px @icon-spriteURL -100px 0px @icon-spritex2URL;
 @twitter: 64px 64px @icon-spriteURL 0px 0px @icon-spritex2URL;
+@icon-spriteList: @instagram instagram, @pinterest pinterest, @facebook facebook, @twitter twitter;
+@spriteCounter: length( @icon-spriteList );
+.cssSpriteBuilder( @spriteCounter ) when ( @spriteCounter > 0 ) {
+	.cssSpriteBuilder(( @spriteCounter - 1 ));
+	@icon: extract( @icon-spriteList, @spriteCounter );
+	@icon-spriteName: extract( @icon, 2 );
+	@icon-spriteClass: extract( @icon, 1 );
+	.icon-@{icon-spriteName} {
+		.cssSprite( @icon-spriteClass );
+	}
+}
+.cssSpriteBuilder( @spriteCounter );
 ```
 
 **Stylus**
 
 ```stylus
 cssSprite( $spriteVals )
-	width: $spriteVals[0];
-	height: $spriteVals[1];
-	background-repeat: no-repeat;
-	background-image: url( $spriteVals[2] );
-	background-position: $spriteVals[3] $spriteVals[4];
+	width: $spriteVals[0]
+	height: $spriteVals[1]
+	background-repeat: no-repeat
+	background-image: url( $spriteVals[2] )
+	background-position: $spriteVals[3] $spriteVals[4]
 	@media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) 
-		background-image: url( $spriteVals[5] );
-		background-size: $bgiSizeW $bgiSizeH;
+		background-image: url( $spriteVals[5] )
+		background-size: $bgiSizeW $bgiSizeH
 	
 
-$icon-spritePath = '../img/icon-sprite';
-$icon-spriteURL = $icon-spritePath + '.png';
-$icon-spritex2URL = $icon-spritePath + '@2.png';
-$bgiSizeW = 200px;
-$bgiSizeH = 200px;
-$instagram = 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL;
-$pinterest = 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL;
-$facebook = 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL;
-$twitter = 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL;
+$icon-spritePath = '../img/icon-sprite'
+$icon-spriteURL = $icon-spritePath + '.png'
+$icon-spritex2URL = $icon-spritePath + '@2.png'
+$bgiSizeW = 200px
+$bgiSizeH = 200px
+$instagram = 64px 64px $icon-spriteURL -100px -100px $icon-spritex2URL
+$pinterest = 64px 64px $icon-spriteURL 0px -100px $icon-spritex2URL
+$facebook = 64px 64px $icon-spriteURL -100px 0px $icon-spritex2URL
+$twitter = 64px 64px $icon-spriteURL 0px 0px $icon-spritex2URL
+$icon-spriteList = $instagram instagram, $pinterest pinterest, $facebook facebook, $twitter twitter
+for $icon in $icon-spriteList 
+	$icon-spriteName = $icon[1]
+	$icon-spriteClass = $icon[0]
+	.icon-{$icon-spriteName} 
+		cssSprite( $icon-spriteClass )
 ```
 
 ## Installation
