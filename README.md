@@ -1,7 +1,7 @@
 Sketch CSS Sprite Mixin
 =======================
 
-Generate a code of mixin for scss, less and stylus in Sketch 3. Code is copied to the clipboard when run the plugin.
+Generate a code of mixin for scss, less and stylus in Sketch. Code is copied to the clipboard when run the plugin.
 
 Sprites name are group layer name of top-level, and the Sprite image name is an Artboard name.
 
