@@ -3,9 +3,18 @@ var cssSpriteGenerator = cssSpriteGenerator || {};
 cssSpriteGenerator.init = function( context, _type ) {
 	this.context = context;
 	this.doc = context.document;
+
 	this.artboard = this.doc.currentPage().currentArtboard();
 	if( !this.artboard ) this.artboard = this.doc.currentPage().artboards().objectAtIndex( 0 );
-
+	this.artboardName = this.artboard.name();
+	if ( -1 != this.artboardName.search(/ /g) ) {
+		var oldName = this.artboardName;
+		this.artboardName = this.artboardName.replace(/ /g, '-');
+		context.document.currentPage().currentArtboard().setName( this.artboardName );
+		var app = NSApplication.sharedApplication();
+		app.displayDialog_withTitle('"' + oldName + '" to "' + this.artboardName + '"', 'Changed Artboard Name!\nby CSS Sprite Mixin Plugin')
+	}
+	
 	this.pasteBoard = null;
 	this.pasteBoard = NSPasteboard.generalPasteboard();
 	this.pasteBoard.declareTypes_owner( [ NSPasteboardTypeString ], null );
