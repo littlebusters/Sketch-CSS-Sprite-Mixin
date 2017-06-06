@@ -159,8 +159,8 @@ cssSpriteGenerator.getSpriteValue = function( _type ) {
 	for (var i = layers.count() - 1; i >= 0; i--) {
 		var layer = layers.objectAtIndex( i );
 			spriteVariable += this.prefix + layer.name() + this.sepalator
-							+ ' ' + layer.frame().width() + 'px' 
-							+ ' ' + layer.frame().height() + 'px'
+							+ ' ' + roundWithDigit( layer.frame().width(), 2 ) + 'px' 
+							+ ' ' + roundWithDigit( layer.frame().height(), 2 ) + 'px'
 							+ ' ' + spriteURLVariable[0]
 							+ ' ' + ( 0 - layer.frame().x() ) + 'px' 
 							+ ' ' + ( 0 - layer.frame().y() ) + 'px' 
@@ -215,3 +215,9 @@ cssSpriteGenerator.getLoopFunction = function( _type ) {
 	return loopFnc;
 }
 
+function roundWithDigit ( _val, _specifiedDigit ) {
+	var digit = Math.pow( 10, _specifiedDigit );
+	var val = Math.round( _val * digit );
+
+	return  val / digit;
+}
