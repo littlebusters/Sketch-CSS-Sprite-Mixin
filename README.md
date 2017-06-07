@@ -147,9 +147,17 @@ for $icon in $icon-spriteList
 
 ## Installation
 
-You can find this plugin in "[Sketch ToolBox.app](http://sketchtoolbox.com/)". Type "mixin" on the search box, then you click "install" button.
+### with Sketch Runner
 
-Or, [Download the plugin zip](https://github.com/littlebusters/Sketch-Css-Sprite-Mixin/archive/master.zip) and unzip. You Choose **Plugins › Reveal Plugins Folder...** in Sketch.app. Put the unziped fonlder to the Plugins folder. 
+With Sketch Runner, just go to the `install` command and search for `css sprite mixin`. Runner allows you to manage plugins and do much more to speed up your workflow in Sketch. [Download Runner here](http://www.sketchrunner.com).
+
+### with Sketchpacks
+
+You can find this plugin in "[Sketchpacks](https://sketchpacks.com/)". Type `css sprite mixin` on the search box, then you click "INSTALL" button.
+
+### with Manualy
+
+Or, [Download the plugin zip](https://github.com/littlebusters/Sketch-Css-Sprite-Mixin/archive/master.zip) and unzip. Double-click the `Sketch CSS Sprite Mixin.sketchplugin` in the folder to install it.
 
 ## License
 
