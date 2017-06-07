@@ -15,7 +15,7 @@
     "version": "1.3.2",
     "description" : "Generate a code of CSS Sprite Mixin to Clipboard.",
     "name" : "Sketch CSS Sprite Mixin",
-    "appcast": "https://raw.githubusercontent.com/littlebusters/Sketch-CSS-Sprite-Mixin/master/Sketch%20CSS%20Sprite%20Mixin.sketchplugin/Contents/Resources/update.xml"
+    "appcast": "https://raw.githubusercontent.com/littlebusters/Sketch-CSS-Sprite-Mixin/master/Sketch%20CSS%20Sprite%20Mixin.sketchplugin/Contents/Resources/update.xml",
     "commands" : [
         {
             "name": "Scss",
